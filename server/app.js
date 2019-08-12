@@ -4,6 +4,8 @@ const app = express();
 const environment = process.env.NODE_ENV || "development";
 const config = require("../knexfile")[environment];
 const db = require("knex")(config);
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 app.use(express.json());
 
@@ -24,8 +26,10 @@ app.get("/api/users/:id", async (req, res) => {
 app.post("/api/users/", async (req, res) => {
   try {
     const { id, username, password } = req.body;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hash = await bcrypt.hash(password, salt);
     const newUser = await db("users")
-      .insert({ id, username, password })
+      .insert({ id, username, password: hash })
       .returning("*")
       .into("users");
     res.json(newUser);
