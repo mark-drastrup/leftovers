@@ -15,6 +15,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "server": "nodemon server/app.js",
+    "migrate": "knex migrate:latest",
+    "rollback": "knex migrate:rollback",
+    "seed": "knex seed:run",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -38,6 +42,7 @@
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-problems": "^3.0.1",
     "eslint-plugin-prettier": "^3.1.0",
+    "nodemon": "^1.19.1",
     "prettier": "^1.18.2"
   }
 }
