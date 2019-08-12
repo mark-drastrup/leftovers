@@ -63,6 +63,61 @@ app.delete("/api/users/:id", async (req, res) => {
   }
 });
 
+app.get("/api/users/:id/food/", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const food = await db("food_items")
+      .select()
+      .where({ user_id: id });
+    res.json(food);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+app.post("/api/users/:id/food/", async (req, res) => {
+  try {
+    const user_id = req.params.id;
+    const { id, item, quantity } = req.body;
+    const food = await db("food_items")
+      .insert({ id, user_id, item, quantity })
+      .returning("*")
+      .into("food_items");
+    res.json(food);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+app.patch("/api/users/:id/food/:foodId", async (req, res) => {
+  try {
+    const { foodId } = req.params;
+    const { item, quantity } = req.body;
+    const updatedFood = await db("food_items")
+      .where({ id: foodId })
+      .update({ item, quantity })
+      .returning("*")
+      .into("food_items");
+    res.json(updatedFood);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+app.delete("/api/users/:id/food/:foodId", async (req, res) => {
+  try {
+    const { foodId } = req.params;
+    const deletedFood = await db("food_items")
+      .where({ id: foodId })
+      .del()
+      .returning("*")
+      .into("food_items");
+    res.json(deletedFood);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`App is running on ${PORT}`);
 });
