@@ -163,6 +163,7 @@ app.delete("/api/users/:id/food/:foodId", async (req, res) => {
 
 app.post("/api/recipes", async (req, res) => {
   const recipes = await client.search({ query: req.body.query });
+  console.log("Recipes conplete");
   res.send(recipes);
 });
 
