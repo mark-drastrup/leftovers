@@ -13,7 +13,7 @@ class SearchBar extends Component {
   render() {
     return (
       <>
-        <FormControl type="text" onKeyDown={this.keyPress} onChange={this.props.onChange} value={this.props.query} />
+        <FormControl className="search__input" type="text" onKeyDown={this.keyPress} onChange={this.props.onChange} value={this.props.query} />
       </>
     )
   }

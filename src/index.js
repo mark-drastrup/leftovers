@@ -17,6 +17,30 @@ const fetchRecipes = data => {
   return newAction;
 };
 
+const fetchFood = data => {
+  const newAction = {
+    type: "FETCH_FOOD",
+    data: data
+  }
+  return newAction;
+}
+
+const addFood = data => {
+  const newAction = {
+    type: "ADD_FOOD",
+    data: data
+  }
+  return newAction;
+}
+
+const deleteFood = data => {
+  const newAction = {
+    type: "DELETE_FOOD",
+    data: data
+  }
+  return newAction;
+}
+
 const updateQuery = data => {
   const newAction = {
     type: "UPDATE_QUERY",
@@ -27,7 +51,8 @@ const updateQuery = data => {
 
 const initialState = {
   recipes: [],
-  query: ""
+  query: "",
+  food: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -40,6 +65,23 @@ const reducer = (state = initialState, action) => {
     case "UPDATE_QUERY": {
       const copiedState = Object.assign({}, state);
       copiedState.query = action.data;
+      return copiedState;
+    }
+    case "FETCH_FOOD": {
+      const copiedState = Object.assign({}, state);
+      copiedState.food = [...copiedState.food, ...action.data]
+      return copiedState;
+    }
+    case "ADD_FOOD": {
+      const copiedState = Object.assign({}, state);
+      copiedState.food = [...copiedState.food, action.data.data[0]]
+      console.log(copiedState)
+      return copiedState;
+    }
+    case "DELETE_FOOD": {
+      const copiedState = Object.assign({}, state);
+      console.log(action.data.data[0])
+      copiedState.food = copiedState.food.filter(item => item.id !== action.data.data[0].id);
       return copiedState;
     }
     default: {
@@ -56,6 +98,7 @@ const store = createStore(
 
 const Root = ({ store }) => (
   <Provider store={store}>
+    {/* <header style={{ backgroundColor: "#282c34", height: "80px" }}></header> */}
     <Router>
       <Route exact path="/" component={App} />
       <Route path="/user/food" component={FoodList} />

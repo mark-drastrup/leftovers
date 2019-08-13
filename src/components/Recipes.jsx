@@ -1,31 +1,36 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Card } from 'react-bootstrap';
+import { Card, Col } from 'react-bootstrap';
+import '../index.css';
 
 class Recipes extends Component {
 
   render() {
-    console.log(this.props.recipes)
     if (this.props.recipes.length !== 0) {
       const recipes = this.props.recipes.map((recipe, index) => {
         return (
-          <Card key={index}>
-            <Card.Img variant="top" src={recipe.recipe.image} alt="Food" />
-            <Card.Body>
-              <Card.Title>{recipe.recipe.label}</Card.Title>
-              {recipe.recipe.ingredientLines.map((ingredient, index) => <Card.Text key={index}>{ingredient}</Card.Text>)}
-            </Card.Body>
+          <Col sm={12} md={4} className="card__container">
+            <Card key={index} >
+              <Card.Img variant="top" src={recipe.recipe.image} alt="Food" />
+              <Card.Body className="card__body">
+                <div>
+                  <Card.Title className="card__title">{recipe.recipe.label}</Card.Title>
+                  {recipe.recipe.ingredientLines.map((ingredient, index) => <Card.Text key={index}>{ingredient}</Card.Text>)}
+                </div>
 
-          </Card>
+                <a href={recipe.recipe.url} className="card__link" target="_blank">Go to Recipe</a>
+              </Card.Body>
+            </Card>
+          </Col>
         )
       })
       return (
-        <div>
+        <>
           {recipes}
-        </div>
+        </>
       )
     }
-    return (<div>test</div>)
+    return (<div></div>)
   }
 }
 

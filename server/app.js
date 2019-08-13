@@ -121,9 +121,9 @@ app.get("/api/users/:id/food/", async (req, res) => {
 app.post("/api/users/:id/food/", async (req, res) => {
   try {
     const user_id = req.params.id;
-    const { id, item, quantity } = req.body;
+    const { item, quantity } = req.body;
     const food = await db("food_items")
-      .insert({ id, user_id, item, quantity })
+      .insert({ user_id, item, quantity })
       .returning("*")
       .into("food_items");
     res.json(food);
@@ -162,9 +162,7 @@ app.delete("/api/users/:id/food/:foodId", async (req, res) => {
 });
 
 app.post("/api/recipes", async (req, res) => {
-  console.log("Before API call");
   const recipes = await client.search({ query: req.body.query });
-  console.log("Recipes conplete");
   res.send(recipes);
 });
 
