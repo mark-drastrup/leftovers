@@ -1,8 +1,10 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+require("dotenv").config();
 
 function App() {
+  console.log(process.env.SECRET)
   return (
     <div className="App">
       <header className="App-header">
