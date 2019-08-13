@@ -1,68 +1,108 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Jammer - Jam with musicians near you
 
-## Available Scripts
+This was created during my time as a student at Code Chrysalis.
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+1.  [Introduction](#introduction)
+1.  [Installation](#installation)
+1.  [API](#API)
+1.  [Resources](#resources)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Introduction
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Leftovers is a web app that allows users to make a list of the food they currently have in their fridge and get recipes based on that. It is also possible to use the searchbar on the landingpage, without signing up for an account. The purpose of Leftovers is to reduce food waste, by giving people inspiration to cook dishes with the food they already have at home.
 
-### `npm test`
+Note that it is required to have Postgres installed to run this project, and to have an API Key for the [Edamam API](https://developer.edamam.com/)
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `npm run build`
+Run `yarn` to install all dependencies.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Create a file named `.env`, where you will put all the database credentials and your API key and API ID. Copy and paste the following contents into the `.env` file and fill out the `YOURVALUE` with your own credentials:
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+```
+REACT_APP_API_KEY=YOURVALUE
+REACT_APP_API_ID=YOURVALUE
+HOST=localhost
+PORT=3000
+PGDATABASE="leftovers"
+PGHOST=localhost
+PGPORT=5432
+DBUSER=YOURVALUE
+PGPASSWORD=YOURVALUE 
+SECRET=YOUREVALUE
+```
+Run `yarn createDatabase` to create the leftovers database.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Run `yarn migrate` to migrate the users and food_items tables to your newly created database.
 
-### `npm run eject`
+Run `yarn seed` to seed the database with test users and food items.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Run `yarn server` to get the backend server running.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Run `yarn start` to get the frontend server runnning.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+If necessary run `yarn rollback` to drop the tables.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## API
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The Leftovers API is used to make CRUD operations on the database. The tables contains following fields:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- users table
+  - id
+  - username
+  - password
+  - created_at
 
-### Code Splitting
+- food_items table
+  - id
+  - user_id
+  - item
+  - quantity
+  - created_at
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
 
-### Analyzing the Bundle Size
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+The API exposes the following operations:
 
-### Making a Progressive Web App
+### Endpoints
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+#### User:
 
-### Advanced Configuration
+GET `/api/users/:id`: Returns a specific user from the database based on the users id.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+POST `/api/users/`: Created a new user with the username and password provided in the body
 
-### Deployment
+PATCH `/api/users/:id`: Updates a username or password with the values provided in the body. The user is found by id.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+DELETE `/api/users/:id`: Deletes a user based on id.
 
-### `npm run build` fails to minify
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+#### Food:
+
+GET `/api/users/:id/food/`: Returns a list of food belonging to the user. The food is found based on the user's id.
+
+POST `/api/users/:id/food/`: Created a new food item belonging to user with the provided id. The request must include item. Quantity is optional
+
+PATCH `/api/users/:id/food/:foodId`: Updates a food item by quantity or item. The food item is found based on food id.
+
+DELETE `/api/users/:id/food/:foodId`: Deletes a food item based on food id.
+
+
+#### Recipes
+
+GET `/api/recipes`: Returns a list of recipes that match the list of food provided in the body.
+
+
+
+## Resources
+
+- [React Documentation](https://reactjs.org/)
+- [React-Redux Documentation](https://react-redux.js.org/)
+- [Postgres Documentation](https://www.postgresql.org/docs/)
+- [Knex Documentation](http://knexjs.org/)
+- [Express v4.x Documentation](https://expressjs.com/en/api.html)
+- [Edamam API](https://developer.edamam.com/)
+
