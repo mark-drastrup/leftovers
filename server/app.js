@@ -1,14 +1,19 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const path = require("path");
 const environment = process.env.NODE_ENV || "development";
 const config = require("../knexfile")[environment];
 const db = require("knex")(config);
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRounds = 10;
+const { RecipeSearchClient } = require("edamam-api");
 
-console.log(process.env.SECRET);
+const client = new RecipeSearchClient({
+  appId: process.env.REACT_APP_API_ID,
+  appKey: process.env.REACT_APP_API_KEY
+});
 
 const createJWT = user => {
   const ONE_WEEK = 60 * 60 * 24 * 7;
@@ -116,9 +121,9 @@ app.get("/api/users/:id/food/", async (req, res) => {
 app.post("/api/users/:id/food/", async (req, res) => {
   try {
     const user_id = req.params.id;
-    const { id, item, quantity } = req.body;
+    const { item, quantity } = req.body;
     const food = await db("food_items")
-      .insert({ id, user_id, item, quantity })
+      .insert({ user_id, item, quantity })
       .returning("*")
       .into("food_items");
     res.json(food);
@@ -155,6 +160,13 @@ app.delete("/api/users/:id/food/:foodId", async (req, res) => {
     throw new Error(error);
   }
 });
+
+app.post("/api/recipes", async (req, res) => {
+  const recipes = await client.search({ query: req.body.query });
+  res.send(recipes);
+});
+
+app.use(express.static(path.resolve(__dirname, "..", "build")));
 
 app.listen(PORT, () => {
   console.log(`App is running on ${PORT}`);
