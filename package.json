@@ -2,7 +2,7 @@
   "name": "leftovers",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:4000",
+  /* "proxy": "http://localhost:4000", */
   "dependencies": {
     "bcrypt": "^3.0.6",
     "bootstrap": "^4.3.1",
