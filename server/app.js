@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const path = require("path");
 const environment = process.env.NODE_ENV || "development";
 const config = require("../knexfile")[environment];
 const db = require("knex")(config);
@@ -164,6 +165,8 @@ app.post("/api/recipes", async (req, res) => {
   const recipes = await client.search({ query: req.body.query });
   res.send(recipes);
 });
+
+app.use(express.static(path.resolve(__dirname, "..", "build")));
 
 app.listen(PORT, () => {
   console.log(`App is running on ${PORT}`);
