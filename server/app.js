@@ -7,8 +7,12 @@ const db = require("knex")(config);
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRounds = 10;
+const { RecipeSearchClient } = require("edamam-api");
 
-console.log(process.env.SECRET);
+const client = new RecipeSearchClient({
+  appId: process.env.REACT_APP_API_ID,
+  appKey: process.env.REACT_APP_API_KEY
+});
 
 const createJWT = user => {
   const ONE_WEEK = 60 * 60 * 24 * 7;
@@ -154,6 +158,11 @@ app.delete("/api/users/:id/food/:foodId", async (req, res) => {
   } catch (error) {
     throw new Error(error);
   }
+});
+
+app.post("/api/recipes", async (req, res) => {
+  const recipes = await client.search({ query: req.body.query });
+  res.send(recipes);
 });
 
 app.listen(PORT, () => {

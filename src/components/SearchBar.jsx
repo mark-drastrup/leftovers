@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FormControl } from 'react-bootstrap';
-const { RecipeSearchClient } = require('edamam-api');
-const client = new RecipeSearchClient({
-  appId: process.env.REACT_APP_API_ID,
-  appKey: process.env.REACT_APP_API_KEY
-});
+import axios from "axios";
 
 class SearchBar extends Component {
   keyPress = (e) => {
@@ -32,11 +28,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchRecipes: async (query) => {
-      console.log("Inside fetch", query)
-      const recipes = await client.search({ query: query })
+      const result = await axios.post("/api/recipes", { query: query })
       dispatch({
         type: "FETCH_RECIPES",
-        data: recipes.hits
+        data: result.data.hits
       });
     },
     onChange: (e) => {
