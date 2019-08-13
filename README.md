@@ -1,4 +1,4 @@
-# Jammer - Jam with musicians near you
+# Leftovers - Reduce food waste
 
 This was created during my time as a student at Code Chrysalis.
 
