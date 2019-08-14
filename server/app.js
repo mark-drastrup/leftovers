@@ -22,8 +22,8 @@ const createJWT = user => {
   });
 };
 
-app.use(express.static(path.resolve(__dirname, "..", "build")));
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, "..", "build")));
 
 const PORT = process.env.PORT || 4000;
 
@@ -45,10 +45,6 @@ app.post("/login", async (req, res) => {
     user: user[0],
     token
   });
-});
-
-app.get("/api/test", (req, res) => {
-  res.send("This is my test route");
 });
 
 app.get("/api/users/:id", async (req, res) => {
