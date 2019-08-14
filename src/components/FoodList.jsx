@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Recipes from "./Recipes";
 import { FaTimes } from 'react-icons/fa';
 import { connect } from "react-redux";
-import { Container, Row, Col, Card, Button, FormControl, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col, Card, FormControl, ListGroup } from 'react-bootstrap';
 import Counter from "./Counter"
 import '../index.css';
 import axios from "axios";
@@ -38,7 +38,7 @@ class FoodList extends Component {
     const foodItems = this.props.food.map((food, index) => {
       return (
         <ListGroup.Item key={food.id} style={{ width: "50%", }}>
-          <FaTimes style={{ cursor: "pointer" }} onClick={() => this.props.deleteItem(food.id)}></FaTimes> {food.item} <Counter />
+          <FaTimes style={{ cursor: "pointer" }} onClick={() => this.props.deleteItem(food.id)}></FaTimes> {food.item} <Counter foodId={food.id} quantity={food.quantity} />
         </ListGroup.Item>
       )
     })
