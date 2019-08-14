@@ -22,8 +22,8 @@ const createJWT = user => {
   });
 };
 
-app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "..", "build")));
+app.use(express.json());
 
 const PORT = process.env.PORT || 4000;
 
