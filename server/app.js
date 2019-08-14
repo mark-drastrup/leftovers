@@ -46,6 +46,10 @@ app.post("/login", async (req, res) => {
   });
 });
 
+app.get("/api/test", (req, res) => {
+  res.send("This is my test route")
+})
+
 app.get("/api/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -165,6 +169,8 @@ app.post("/api/recipes", async (req, res) => {
   const recipes = await client.search({ query: req.body.query });
   res.send(recipes);
 });
+
+
 
 app.use(express.static(path.resolve(__dirname, "..", "build")));
 
