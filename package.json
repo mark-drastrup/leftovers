@@ -24,9 +24,10 @@
     "run.env": "^1.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server/app.js",
+    "hack:client": "react-scripts start",
+    "hack:server": "nodemon server/app.js",
     "build": "react-scripts build",
-    "server": "nodemon server/app.js",
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
