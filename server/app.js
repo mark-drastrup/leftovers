@@ -27,6 +27,10 @@ app.use(express.static(path.resolve(__dirname, "..", "build")));
 
 const PORT = process.env.PORT || 4000;
 
+app.get("/*", function(req, res) {
+  res.sendFile("../public/index.html");
+});
+
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await db("users")
