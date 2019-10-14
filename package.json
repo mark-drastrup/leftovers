@@ -25,6 +25,7 @@
   },
   "scripts": {
     "start": "node server/app.js",
+    "heroku-postbuild": "yarn && yarn run build",
     "hack:client": "react-scripts start",
     "hack:server": "nodemon server/app.js",
     "build": "react-scripts build",
