@@ -23,6 +23,7 @@ const createJWT = user => {
 };
 
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, "..", "build")));
 
 const PORT = process.env.PORT || 4000;
 
@@ -45,10 +46,6 @@ app.post("/login", async (req, res) => {
     token
   });
 });
-
-app.get("/api/test", (req, res) => {
-  res.send("This is my test route")
-})
 
 app.get("/api/users/:id", async (req, res) => {
   try {
@@ -170,9 +167,13 @@ app.post("/api/recipes", async (req, res) => {
   res.send(recipes);
 });
 
-
-
-app.use(express.static(path.resolve(__dirname, "..", "build")));
+app.get("/*", function(req, res) {
+  res.sendFile(path.join(__dirname, "..", "build"), function(err) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`App is running on ${PORT}`);
