@@ -27,10 +27,6 @@ app.use(express.static(path.resolve(__dirname, "..", "build")));
 
 const PORT = process.env.PORT || 4000;
 
-app.get("/*", function(req, res) {
-  res.sendFile("../public/index.html");
-});
-
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await db("users")
@@ -172,7 +168,7 @@ app.post("/api/recipes", async (req, res) => {
 });
 
 app.get("/*", function(req, res) {
-  res.sendFile(path.join(__dirname, "..", "build"), function(err) {
+  res.sendFile(path.join(__dirname, "build", "index.html"), function(err) {
     if (err) {
       res.status(500).send(err);
     }
