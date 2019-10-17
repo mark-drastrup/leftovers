@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const path = require("path");
 const environment = process.env.NODE_ENV || "development";
 const config = require("../knexfile")[environment];
@@ -23,6 +24,7 @@ const createJWT = user => {
 };
 
 app.use(express.json());
+app.use(cors());
 app.use(express.static(path.resolve(__dirname, "..", "build")));
 
 const PORT = process.env.PORT || 4000;
