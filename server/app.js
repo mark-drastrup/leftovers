@@ -9,6 +9,7 @@ const db = require("knex")(config);
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRounds = 10;
+const { isLoggedIn, authorizeUser } = require("./middleware/auth");
 const { RecipeSearchClient } = require("edamam-api");
 
 const client = new RecipeSearchClient({
