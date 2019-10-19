@@ -10,6 +10,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRounds = 10;
 const { isLoggedIn, authorizeUser } = require("./middleware/auth");
+const errorHandler = require("./handlers/error");
 const { RecipeSearchClient } = require("edamam-api");
 
 const client = new RecipeSearchClient({
@@ -50,7 +51,7 @@ app.post("/login", async (req, res) => {
   });
 });
 
-app.get("/api/users/:id", async (req, res) => {
+app.get("/api/users/:id", isLoggedIn, authorizeUser, async (req, res) => {
   try {
     const { id } = req.params;
     const user = await db("users")
@@ -81,7 +82,7 @@ app.post("/api/users/", async (req, res) => {
   }
 });
 
-app.patch("/api/users/:id", async (req, res) => {
+app.patch("/api/users/:id", isLoggedIn, authorizeUser, async (req, res) => {
   try {
     const { id } = req.params;
     const { username, password } = req.body;
@@ -96,7 +97,7 @@ app.patch("/api/users/:id", async (req, res) => {
   }
 });
 
-app.delete("/api/users/:id", async (req, res) => {
+app.delete("/api/users/:id", isLoggedIn, authorizeUser, async (req, res) => {
   try {
     const { id } = req.params;
     const deletedUser = await db("users")
@@ -110,7 +111,7 @@ app.delete("/api/users/:id", async (req, res) => {
   }
 });
 
-app.get("/api/users/:id/food/", async (req, res) => {
+app.get("/api/users/:id/food/", isLoggedIn, authorizeUser, async (req, res) => {
   try {
     const { id } = req.params;
     const food = await db("food_items")
@@ -122,48 +123,63 @@ app.get("/api/users/:id/food/", async (req, res) => {
   }
 });
 
-app.post("/api/users/:id/food/", async (req, res) => {
-  try {
-    const user_id = req.params.id;
-    const { item, quantity } = req.body;
-    const food = await db("food_items")
-      .insert({ user_id, item, quantity })
-      .returning("*")
-      .into("food_items");
-    res.json(food);
-  } catch (error) {
-    throw new Error(error);
+app.post(
+  "/api/users/:id/food/",
+  isLoggedIn,
+  authorizeUser,
+  async (req, res) => {
+    try {
+      const user_id = req.params.id;
+      const { item, quantity } = req.body;
+      const food = await db("food_items")
+        .insert({ user_id, item, quantity })
+        .returning("*")
+        .into("food_items");
+      res.json(food);
+    } catch (error) {
+      throw new Error(error);
+    }
   }
-});
+);
 
-app.patch("/api/users/:id/food/:foodId", async (req, res) => {
-  try {
-    const { foodId } = req.params;
-    const { item, quantity } = req.body;
-    const updatedFood = await db("food_items")
-      .where({ id: foodId })
-      .update({ item, quantity })
-      .returning("*")
-      .into("food_items");
-    res.json(updatedFood);
-  } catch (error) {
-    throw new Error(error);
+app.patch(
+  "/api/users/:id/food/:foodId",
+  isLoggedIn,
+  authorizeUser,
+  async (req, res) => {
+    try {
+      const { foodId } = req.params;
+      const { item, quantity } = req.body;
+      const updatedFood = await db("food_items")
+        .where({ id: foodId })
+        .update({ item, quantity })
+        .returning("*")
+        .into("food_items");
+      res.json(updatedFood);
+    } catch (error) {
+      throw new Error(error);
+    }
   }
-});
+);
 
-app.delete("/api/users/:id/food/:foodId", async (req, res) => {
-  try {
-    const { foodId } = req.params;
-    const deletedFood = await db("food_items")
-      .where({ id: foodId })
-      .del()
-      .returning("*")
-      .into("food_items");
-    res.json(deletedFood);
-  } catch (error) {
-    throw new Error(error);
+app.delete(
+  "/api/users/:id/food/:foodId",
+  isLoggedIn,
+  authorizeUser,
+  async (req, res) => {
+    try {
+      const { foodId } = req.params;
+      const deletedFood = await db("food_items")
+        .where({ id: foodId })
+        .del()
+        .returning("*")
+        .into("food_items");
+      res.json(deletedFood);
+    } catch (error) {
+      throw new Error(error);
+    }
   }
-});
+);
 
 app.post("/api/recipes", async (req, res) => {
   const recipes = await client.search({ query: req.body.query });
@@ -177,6 +193,8 @@ app.get("/*", function(req, res) {
     }
   });
 });
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`App is running on ${PORT}`);
