@@ -1,6 +1,6 @@
 import React from "react";
 import Recipes from "./components/Recipes";
-import SearchBar from "./components/SearchBar";
+import LandingPage from "./components/LandingPage";
 import Navbar from "./components/Navbar";
 import { Container, Row, Col } from "react-bootstrap";
 import "./App.css";
@@ -13,18 +13,7 @@ function App() {
         <Row className="hero__row">
           <Col md={12} className="hero__sidebar">
             <Navbar />
-            <div className="hero__searchbar">
-              <h1>Welcome to Leftovers</h1>
-              <h3>
-                Leftovers prevents food waste by providing recipes with food you
-                have in your fridge
-              </h3>
-              <SearchBar></SearchBar>
-              <p className="hero__helptext">
-                Write ingredients separated by a space: "pasta tomato avocado
-                cheese"
-              </p>
-            </div>
+            <LandingPage />
             <div></div>
           </Col>
         </Row>
