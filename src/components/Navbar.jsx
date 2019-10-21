@@ -3,10 +3,20 @@ import "../App.css";
 
 const Navbar = props => {
   return (
-    <div className="hero__menu">
-      <p>Sign Up</p>
-      <p>Sign In</p>
-    </div>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <ul className="navbar-nav">
+        <li className="nav-item">
+          <a className="nav-link" href="#">
+            Signup
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#">
+            Login
+          </a>
+        </li>
+      </ul>
+    </nav>
   );
 };
 

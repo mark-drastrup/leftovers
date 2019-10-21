@@ -13,8 +13,7 @@ const Root = ({ store }) => (
     {/* <header style={{ backgroundColor: "#282c34", height: "80px" }}></header> */}
     <Router>
       <Switch>
-        <Route exact path="/" component={App} />
-        <Route path="/user/food" component={FoodList} />
+        <App />
       </Switch>
     </Router>
   </Provider>

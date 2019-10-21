@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -18,7 +18,7 @@ code {
 .list_title {
   display: flex;
   justify-content: space-between;
-  align-items: center
+  align-items: center;
 }
 
 .listgroup {
@@ -64,14 +64,16 @@ code {
 
 .recipes {
   background-color: #373d48;
+  margin-right: 0;
+  margin-left: 0;
 }
 
 ::-webkit-scrollbar {
   width: 4px;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
   border-radius: 6px;
 }

@@ -1,5 +1,5 @@
 .App {
-  background-color: #373d48;
+  /* background-color: #373d48; */
   min-height: 100vh;
   height: 100%;
 }
@@ -17,7 +17,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+
   color: white;
 }
 
@@ -26,9 +26,6 @@
   background-repeat: no-repeat;
   background-size: 100vw 120vh;
   height: 100vh;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center
 }
 
 .hero__row {
@@ -46,20 +43,16 @@
   height: 100vh;
 }
 
-.hero__menu {
+.navbar {
   display: flex;
   justify-content: flex-end;
-  margin-top: 10px;
+  border-radius: 0px;
+  margin-bottom: 0;
 }
 
-.hero__menu p {
-  font-size: 16px;
-  margin-left: 10px;
-  cursor: pointer
-}
-
-.hero__searchbar {
-  margin-top: -10px;
+.landingpage {
+  margin-right: 15px;
+  margin-left: 15px;
 }
 
 .search__input {
