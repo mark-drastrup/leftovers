@@ -3,7 +3,7 @@ import "../App.css";
 
 const Navbar = props => {
   return (
-    <div className="hero__menu">
+    <div className="navbar">
       <p>Sign Up</p>
       <p>Sign In</p>
     </div>
