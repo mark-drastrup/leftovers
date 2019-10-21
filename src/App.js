@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <Container fluid="true">
         <Row className="vh-100 no-gutters">
-          <Col md={12}>
+          <Col md={12} className="d-flex flex-column">
             <Navbar />
             <Main />
           </Col>
