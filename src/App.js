@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <Container fluid="true">
-        <Row>
+        <Row className="vh-100">
           <Col md={12}>
             <Navbar />
             <Main />

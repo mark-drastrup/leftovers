@@ -46,8 +46,9 @@
 .navbar {
   display: flex;
   justify-content: flex-end;
-  margin-top: 10px;
   background-color: #fff;
+  margin-right: -15px;
+  margin-left: -15px;
 }
 
 .navbar p {
