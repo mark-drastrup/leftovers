@@ -6,7 +6,7 @@ import { Container, Row } from "react-bootstrap";
 const LandingPage = props => {
   return (
     <>
-      <div className="hero__searchbar">
+      <div className="landingpage h-100">
         <h1>Welcome to Leftovers</h1>
         <h3>
           Leftovers prevents food waste by providing recipes with food you have

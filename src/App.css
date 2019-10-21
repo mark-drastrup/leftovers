@@ -1,5 +1,5 @@
 .App {
-  background-color: #373d48;
+  /* background-color: #373d48; */
   min-height: 100vh;
   height: 100%;
 }
@@ -46,19 +46,13 @@
 .navbar {
   display: flex;
   justify-content: flex-end;
-  background-color: #fff;
-  margin-right: -15px;
-  margin-left: -15px;
+  border-radius: 0px;
+  margin-bottom: 0;
 }
 
-.navbar p {
-  font-size: 16px;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.hero__searchbar {
-  margin-top: -10px;
+.landingpage {
+  margin-right: 15px;
+  margin-left: 15px;
 }
 
 .search__input {
